@@ -21,7 +21,7 @@ if ($refreshToken){
 	$response = Request::getAccessTokenByRefreshToken($refreshToken);
 	$respData = json_decode($response, true);
 
-	\OCP\Util::writeLog('Gsync', 'Autosync session.' . $response, \OCP\Util::DEBUG);
+	App::log('Autosync session.' . $response, \OCP\Util::DEBUG);
 	Contact::import(@$respData['access_token']);
 }
 

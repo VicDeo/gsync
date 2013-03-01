@@ -19,7 +19,7 @@ if (isset($_GET['code'])){
 	$code = preg_replace('/[^0-9a-zA-Z\.\-_\/]*/i', '', $_GET['code']);
 	$response = Request::getTokenByCode($code);
 	$respData = json_decode($response, true);
-	\OCP\Util::writeLog(App::APP_ID, 'Goglesaid.' . $response, \OCP\Util::DEBUG);
+	App::log('Goglesaid.' . $response, \OCP\Util::DEBUG);
 	if (@$respData[App::GOOGLE_REFRESH_TOKEN]){
 		App::setRefreshToken($respData[App::GOOGLE_REFRESH_TOKEN]);
 	}

@@ -75,6 +75,10 @@ class App {
 		self::setUserValue(self::GOOGLE_REFRESH_TOKEN, $value);
 	}
 	
+	public static function log($message, $level= \OC_Log::ERROR) {
+		\OCP\Util::writeLog(self::APP_ID, $message, $level);
+	}
+	
 	protected static function getUserValue($key, $default=''){
 		return \OCP\Config::getUserValue(\OCP\User::getUser(), self::APP_ID, $key, $default);
 	}

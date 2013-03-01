@@ -51,18 +51,18 @@ class Contact {
 	 */
 	public static function import($accessToken) {
 		if (!$accessToken){
-			\OCP\Util::writeLog('Gsync', 'Import attempt. Access token is empty', \OCP\Util::DEBUG);
+			App::log('Import attempt. Access token is empty', \OCP\Util::DEBUG);
 			return;
 		}
 		Request::setAccessToken($accessToken);
 
-		\OCP\Util::writeLog('Gsync', 'Firing contacts request', \OCP\Util::DEBUG);
+		App::log('Firing contacts request', \OCP\Util::DEBUG);
 
 		$respData = Request::getContactsFeed();
 		$feed = json_decode($respData, true);
 		$feed = @$feed['feed']['entry'];
 
-		\OCP\Util::writeLog('Gsync', 'Got response from Google. Items count: ' . count($feed), \OCP\Util::DEBUG);
+		App::log('Got response from Google. Items count: ' . count($feed), \OCP\Util::DEBUG);
 
 		if (is_array($feed) && count($feed)) {
 			self::parseFeed($feed);
@@ -200,7 +200,7 @@ class Contact {
 			if ($img->loadFromData($data)) {
 				$vcard->addProperty(self::CONTACT_PHOTO, $img->__toString(), array('ENCODING' => 'b', 'TYPE' => $img->mimeType()));
 			} else {
-				\OCP\Util::writeLog('Gsync', 'Unable to parse the image provided by Google. ', \OCP\Util::WARN);
+				App::log('Unable to parse the image provided by Google. ', \OCP\Util::WARN);
 			}
 		}
 

@@ -232,7 +232,7 @@ class Request {
 
 		$error = curl_errno($ch);
 		if ($error) {
-			\OCP\Util::writeLog('Gsync', 'Curl reports the error: ' . curl_error($ch), \OCP\Util::WARN);
+			App::log('Curl reports the error: ' . curl_error($ch), \OCP\Util::WARN);
 		}
 
 		curl_close($ch);
