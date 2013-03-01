@@ -5,6 +5,8 @@
  * later.
  */
 ?>
+<?php $cid = $_[OCA_Gsync\App::GOOGLE_CLIENT_ID] ?>
+<?php $isReady = !empty($cid) ?>
 <form id="gsyncform">
     <fieldset class="personalblock">
 	<strong>Google Sync v<?php echo $_['app_version']; ?></strong>
@@ -14,22 +16,25 @@
 		<br />
 		<span class="bold"><?php echo $l->t('Your Redirect URI') ?>:</span> <?php echo $_['gsync_redirect'] ?>
 		<br />
-		<a target="_blank" href="https://code.google.com/apis/console"><?php echo $l->t('Create a new OAuth 2.0 Web Application') ?></a>
+		<a target="_blank" href="https://code.google.com/apis/console">
+			<?php echo $l->t('Create a new OAuth 2.0 Web Application') ?>
+		</a>
 		<br />
 		<label><strong>Client ID:</strong></label>
-		<input type="text" id="gsync_client_id" value="<?php echo $_['gsync_client_id'] ?>" placeholder="<?php echo $l->t('App Client id') ?>" />
-		<button id="gsync_import" <?php if (empty($_['gsync_client_id'])) { ?>disabled="disabled"<?php } ?>><?php echo $l->t('Import') ?></button>
+		<input type="text" id="gsync_client_id" value="<?php echo $cid ?>" placeholder="<?php echo $l->t('App Client id') ?>" />
+		<button id="gsync_import" <?php if ($isReady) { ?>disabled="disabled"<?php } ?>><?php echo $l->t('Import') ?></button>
 		<span class="msg"></span>
 		<br />
 		<script>
-			var gsync_url = 'https://accounts.google.com/o/oauth2/auth?client_id=<?php echo $_['gsync_client_id'] ?>&response_type=token&scope=https://www.google.com/m8/feeds&redirect_uri=<?php echo $_['gsync_redirect'] ?>';
-			var gsync_perm_url = 'https://accounts.google.com/o/oauth2/auth?scope=https://www.google.com/m8/feeds/&state=/profile&response_type=code&client_id=<?php echo $_['gsync_client_id'] ?>&access_type=offline&redirect_uri=<?php echo $_['gsync_redirect'] ?>';
+			var gsync_url = 'https://accounts.google.com/o/oauth2/auth?client_id=<?php echo $cid ?>&response_type=token&scope=https://www.google.com/m8/feeds&redirect_uri=<?php echo $_['gsync_redirect'] ?>';
+			var gsync_perm_url = 'https://accounts.google.com/o/oauth2/auth?scope=https://www.google.com/m8/feeds/&state=/profile&response_type=code&client_id=<?php echo $cid ?>&access_type=offline&redirect_uri=<?php echo $_['gsync_redirect'] ?>';
 		</script>
-		<div <?php echo (!empty($_['gsync_client_id']) ? '' : 'style="display:none"');  ?>>
+		<div <?php echo (!$isReady ? '' : 'style="display:none"');  ?>>
 			<hr />
 			<strong><?php echo $l->t('Autosync') ?></strong><br />
 			<label><strong><?php echo $l->t('App Secret') ?>:</strong></label>
-			<input type="text" id="gsync_secret" value="<?php echo $_['gsync_secret'] ?>" placeholder="<?php echo $l->t('App Secret') ?>" />        <?php if ( empty($_['gsync_refresh_token'])){ ?> 
+			<input type="text" id="gsync_secret" value="<?php echo $_['gsync_secret'] ?>" placeholder="<?php echo $l->t('App Secret') ?>" />
+        <?php if ( empty($_['gsync_refresh_token'])){ ?> 
 		    <button <?php if (empty($_['gsync_secret'])) { ?>disabled="disabled"<?php } ?> id="gsync_autosync" name="gsync_autosync"><?php echo $l->t('Request autosync permissions') ?></button><span class="msg-2"></span> 
 			<?php } else { ?>
 				<button id="gsync_revoke"><?php echo $l->t('Revoke Permissions'); ?></button>
