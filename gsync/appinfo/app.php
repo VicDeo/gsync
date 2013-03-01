@@ -23,6 +23,13 @@ class App {
 		
 		\OCP\App::registerPersonal(self::APP_ID, 'settings');
 	}
+	
+	public static function initAjaxController(){
+		\OCP\JSON::checkLoggedIn();
+		\OCP\JSON::callCheck();
+		\OCP\JSON::checkAppEnabled('contacts');
+		\OCP\JSON::checkAppEnabled(self::APP_ID);
+	}
 
 }
 

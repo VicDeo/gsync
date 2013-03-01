@@ -11,9 +11,7 @@
  */
 namespace OCA_Gsync;
 
-\OCP\JSON::checkLoggedIn();
-\OCP\JSON::checkAppEnabled('contacts');
-\OCP\JSON::checkAppEnabled('gsync');
+App::initAjaxController();
 
 Contact::import(@$_POST['access_token']);
 
