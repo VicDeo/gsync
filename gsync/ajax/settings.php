@@ -17,16 +17,17 @@ App::initAjaxController();
 $l = new \OC_L10N('core');
 
 // Get data
-if (isset($_POST['gsync_client_id'])) {
-	$client_id = preg_replace('/[^0-9a-zA-Z\.\-_]*/i', '', $_POST['gsync_client_id']);
-	\OCP\Config::setUserValue(\OCP\User::getUser(), 'gsync', 'client_id', $client_id);
-} elseif (isset($_POST['gsync_secret'])) {
-	$appSecret = preg_replace('/[^0-9a-zA-Z\.\-_]*/i', '', $_POST['gsync_secret']);
-	\OCP\Config::setUserValue(\OCP\User::getUser(), 'gsync', 'secret', $appSecret);
-} elseif (isset($_POST['revoke_token'])) {
-	$token = \OCP\Config::getUserValue(\OCP\User::getUser(), 'gsync', 'refresh_token', '');
-	OCA_Gsync\Request::revokeRefreshToken($token);
-	\OCP\Config::setUserValue(\OCP\User::getUser(), 'gsync', 'refresh_token', '');
+if (isset($_POST[App::GOOGLE_CLIENT_ID])){
+	App::setClientId($_POST[App::GOOGLE_CLIENT_ID]);
+	
+} elseif (isset($_POST[App::GOOGLE_SECRET])){
+	App::setSecret($_POST[App::GOOGLE_SECRET]);
+	
+} elseif (isset($_POST[App::GOOGLE_REFRESH_TOKEN])) {
+	$token = App::getRefreshToken();
+	Request::revokeRefreshToken($token);
+	App::setRefreshToken('');
+	
 } else {
 	\OCP\JSON::error(array("data" => array("message" => $l->t("Invalid request"))));
 }
