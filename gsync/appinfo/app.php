@@ -18,7 +18,9 @@ class App {
 	const GOOGLE_CLIENT_ID = 'gsync_client_id';
 	const GOOGLE_SECRET = 'gsync_secret';
 	const GOOGLE_REFRESH_TOKEN = 'refresh_token';
-
+	
+	// Localization
+	static public $l10n;
 
 	public static function init(){
 		\OC::$CLASSPATH['OCA_Gsync\Contact'] = self::APP_ID . '/lib/contact.php';
@@ -26,6 +28,7 @@ class App {
 		\OC::$CLASSPATH['OCA_Gsync\Adapter'] = self::APP_ID . '/lib/adapter.php';
 		
 		\OCP\App::registerPersonal(self::APP_ID, 'settings');
+		self::$l10n = \OC_L10N::get('core');
 	}
 	
 	public static function initAjaxController(){

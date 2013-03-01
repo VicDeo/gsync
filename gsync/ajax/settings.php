@@ -14,8 +14,6 @@ namespace OCA_Gsync;
 
 App::initAjaxController();
 
-$l = new \OC_L10N('core');
-
 // Get data
 if (isset($_POST[App::GOOGLE_CLIENT_ID])){
 	App::setClientId($_POST[App::GOOGLE_CLIENT_ID]);
@@ -29,7 +27,19 @@ if (isset($_POST[App::GOOGLE_CLIENT_ID])){
 	App::setRefreshToken('');
 	
 } else {
-	\OCP\JSON::error(array("data" => array("message" => $l->t("Invalid request"))));
+	\OCP\JSON::error(
+		array(
+			"data" => array(
+				"message" => App::$l10n->t("Invalid request")
+			)
+		)
+	);
+	
 }
 
-\OCP\JSON::success(array("data" => array("message" => $l->t("Saved"))));
+\OCP\JSON::success(
+	array("data" => array(
+			"message" => App::$l10n->t("Saved")
+		)
+	)
+);
