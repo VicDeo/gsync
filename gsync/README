@@ -1,0 +1,48 @@
+This application is distributed WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU AFFERO GENERAL PUBLIC LICENSE for more details.
+
+Your feedback is appreciated.
+You are welcome to post to this thread http://forum.owncloud.org/viewtopic.php?f=4&t=4 
+
+
+Installation:
+Upload the gsync directory under the 'apps' directory of your ownCloud.
+Navigate to the 'Apps' page in Admin, click the 'Gsync' in the 
+application list. Then click the 'Enable' button.
+
+
+Setup:
+1. Manual Sync
+a) Navigate to the 'Personal' page.
+b) Copy your redirect URI to the clipboard.
+c) Navigate to https://code.google.com/apis/console
+d) Create a new Web application at the 'API Access' tab.
+e) Fill in the 'Client ID' field with the newly created application Client ID.
+
+2. Autosync *experimental*
+Current implementation rewrites the changes in contacts that made in
+ownCloud if the contact originated from Google.
+
+a) Complete all steps for manual sync and check if it works
+b) Paste 'Secret' of your Web application to the respective form
+c) Click the 'Request autosync permissions' button
+d) Confirm that you want to setup offline access for your Web application.
+
+Autosync only: Please note that it is not possible to reuse one Web application 
+to sync the contacts with another ownCloud instance on the same domain. 
+Google won't grant proper permissions for the second instance.
+
+
+
+Usage:
+1. Manual Sync
+a) Click the 'Import' button under the 'Google Sync' label.
+b) Authorize the app to access your personal data.
+c) Check your Contacts.
+
+2. Autosync *experimental*
+a) Add to your crontab with desired sync periodicity:
+   replacing User, Password and http://domain.tld/path/to/owncloud with actual data:
+wget -rnd --auth-no-challenge --http-user=User --http-password=Password -S --spider  'http://domain.tld/path/to/owncloud/?app=gsync&getfile=auto.php'
+

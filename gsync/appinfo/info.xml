@@ -1,0 +1,11 @@
+<?xml version="1.0"?> 
+<info>
+	<id>gsync</id>
+	<name>Gsync</name>
+	<version>0.4.1</version>
+	<licence>AGPL</licence>
+	<author>Victor Dubiniuk</author>
+	<require>4.5</require>
+	<description>Sync addressbook with Google Contacts</description>
+	<default_enable/>
+</info>

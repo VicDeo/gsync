@@ -1,0 +1,39 @@
+v0.4.1
+* tested with 4.5
+* Fixed incorrect names order for 4.5
+* Fixed reversed ZIP/Country order for 4.5
+* Email types support
+v0.4
+* Note property support
+* More stable and faster
+* Group caching to reduce the number of requests
+* Skip contacts changed in ownCloud within last 10 minutes
+* Autosync support (Experimental)
+* Logic moved to PHP model
+v0.3.2
+* Do not store contact image if the format is not recognized
+* Rescan contact groups 
+v0.3.1
+* fixed name collision with the app title at apps.owncloud.com
+* sanitize input for Client ID
+* check for the php-curl extension
+* cUrl SSL error fix
+v0.3
+* ownCloud 4 compatibility
+* Birthday property support
+* Nickname property support
+* Groups support
+v0.2
+* OAuth 2.0
+* Gdata library dismissed / Manual data parsing 
+* Sync for previously imported contacts
+* Photo export
+v0.1.2
+* Minor bugfixes
+v0.1.1
+* Compatibility: The 'N' VCard property is taken according to the current dev version of owncloud
+* Bugfix: Infinite request permissions loop
+* Required ownCloud version changed to 3
+
+v0.1
+* Implemented Google contacts import 
