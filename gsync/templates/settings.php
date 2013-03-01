@@ -25,8 +25,8 @@
 		<br />
 		<label><strong>Client ID:</strong></label>
 		<input type="text" id="gsync_client_id" value="<?php echo $cid ?>" placeholder="<?php echo $l->t('App Client id') ?>" />
-		<button id="gsync_import" <?php if (!$isReady) { ?>disabled="disabled"<?php } ?>
-				><?php echo $l->t('Import') ?>
+		<button id="gsync_import" <?php if (!$isReady) { ?>disabled="disabled"<?php } ?>>
+			<?php echo $l->t('Import') ?>
 		</button>
 		<span class="msg"></span>
 		<br />
