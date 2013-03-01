@@ -25,12 +25,12 @@ class Request {
 
 	/**
 	 * Url to deal with tokens
-	 */	
+	 */
 	const TOKEN_REQUEST = 'https://accounts.google.com/o/oauth2/token';
 
 	/**
 	 * Url to revoke access token
-	 */	
+	 */
 	const TOKEN_REVOKE = 'https://accounts.google.com/o/oauth2/revoke?token=';
 	
 	/**
@@ -168,6 +168,11 @@ class Request {
 		return self::$_groupCache[$groupId];
 	}
 	
+	/**
+	 * Perform Get request
+	 * @param string $url
+	 * @return string
+	 */
 	private static function _doGet($url){
 		self::$_url = $url;
 		self::$_method = 'GET';
@@ -175,6 +180,9 @@ class Request {
 		return self::_execute();
 	}
 	
+	/**
+	 * Unset request headers preserving authorization
+	 */
 	private static function _cleanHeaders(){
 		$accessToken = @self::$_headers['authorization'];
 		if ($accessToken){

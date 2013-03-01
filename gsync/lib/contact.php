@@ -45,6 +45,10 @@ class Contact {
 	);
 	private static $_bookId = null;
 
+	/**
+	 * Get contacts and store them
+	 * @param string $accessToken
+	 */
 	public static function import($accessToken) {
 		if (!$accessToken){
 			\OCP\Util::writeLog('Gsync', 'Import attempt. Access token is empty', \OCP\Util::DEBUG);
@@ -65,6 +69,10 @@ class Contact {
 		}
 	}
 
+	/**
+	 * Store feeds into the Contacts
+	 * @param array $feed 
+	 */
 	public static function parseFeed($feed) {
 		$userid = \OCP\User::getUser();
 

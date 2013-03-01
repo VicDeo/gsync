@@ -49,6 +49,11 @@ class Adapter {
 	const PHOTO_LINK_REL = 'http://schemas.google.com/contacts/2008/rel#photo';
 	const REL_DEFAULT = 'REL_DEFAULT';
 
+	/**
+	 * Adapt Google contact to VCard 
+	 * @param array $contact
+	 * @return array 
+	 */
 	public static function translateContact($contact) {
 		$entry = self::translatePropertyStrings($contact);
 		$entry[Contact::CONTACT_EMAIL] = self::translateEmails($contact);
@@ -61,13 +66,11 @@ class Adapter {
 	}
 
 	/**
+	 * Adapt all string properties in one go
 	 * https://developers.google.com/google-apps/contacts/v3/#contact_entry
 	 * API 3.0 is backward compatible with 2.0 
 	 * Organization
 	 * https://developers.google.com/gdata/docs/2.0/elements#gdOrganization 
-	 * Email
-	 * https://developers.google.com/gdata/docs/2.0/elements#gdEmail
-	 * 
 	 */
 	public static function translatePropertyStrings($contact) {
 		$name = '';
@@ -92,6 +95,12 @@ class Adapter {
 		);
 	}
 
+	/**
+	 * Translate contacts into Emails array
+	 * @param array $contact
+	 * @return array
+	 * https://developers.google.com/gdata/docs/2.0/elements#gdEmail
+	 */
 	public static function translateEmails($contact) {
 
 		$rels = array(
@@ -249,3 +258,17 @@ PAGER
 	}
 
 }
+
+/* TODO: Add support of the rels below 
+IM_AIM = 'http://schemas.google.com/g/2005#AIM';
+IM_MSN = 'http://schemas.google.com/g/2005#MSN';
+IM_YAHOO = 'http://schemas.google.com/g/2005#YAHOO';
+IM_SKYPE = 'http://schemas.google.com/g/2005#SKYPE';
+IM_QQ = 'http://schemas.google.com/g/2005#QQ';
+IM_GOOGLE_TALK = 'http://schemas.google.com/g/2005#GOOGLE_TALK';
+IM_ICQ = 'http://schemas.google.com/g/2005#ICQ';
+IM_JABBER = 'http://schemas.google.com/g/2005#JABBER';
+IM_NETMEETING = 'http://schemas.google.com/g/2005#netmeeting';
+
+PHOTO_EDIT_LINK_REL = 'http://schemas.google.com/contacts/2008/rel#edit-photo';
+*/
