@@ -101,9 +101,9 @@ class Request {
 			);
 		self::$_postParams = array(
 			'code' => $code,
-			'client_id' => \OCP\Config::getUserValue(\OCP\User::getUser(), 'gsync', 'client_id', ''),
-			'client_secret' => \OCP\Config::getUserValue(\OCP\User::getUser(), 'gsync', 'secret', ''),
-			'redirect_uri' => \OCP\Util::linkToAbsolute('gsync', 'index.php'),
+			'client_id' => App::getClientId(),
+			'client_secret' => App::getSecret(),
+			'redirect_uri' => App::getRedirectUri(),
 			'grant_type' => 'authorization_code'
 		);
 		return self::_execute();
@@ -122,8 +122,8 @@ class Request {
 			);
 		self::$_postParams = array(
 			'refresh_token' => $refreshToken,
-			'client_id' => \OCP\Config::getUserValue(\OCP\User::getUser(), 'gsync', 'client_id', ''),
-			'client_secret' => \OCP\Config::getUserValue(\OCP\User::getUser(), 'gsync', 'secret', ''),
+			'client_id' => App::getClientId(),
+			'client_secret' => App::getSecret(),
 			'grant_type' => 'refresh_token'
 		);
 		return self::_execute();
