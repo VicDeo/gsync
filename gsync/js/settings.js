@@ -51,7 +51,7 @@ $(document).ready(function(){
 	$('#gsync_revoke').click(function(event){
 		event.preventDefault();
 		$.post( OC.filePath('gsync', 'ajax', 'settings.php'), 
-			{revoke_token : "true"},
+			{refresh_token : "true"},
 			function(data){
 				window.location.reload();
 			}
