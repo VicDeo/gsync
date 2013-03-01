@@ -25,14 +25,16 @@
 		<br />
 		<label><strong>Client ID:</strong></label>
 		<input type="text" id="gsync_client_id" value="<?php echo $cid ?>" placeholder="<?php echo $l->t('App Client id') ?>" />
-		<button id="gsync_import" <?php if ($isReady) { ?>disabled="disabled"<?php } ?>><?php echo $l->t('Import') ?></button>
+		<button id="gsync_import" <?php if (!$isReady) { ?>disabled="disabled"<?php } ?>
+				><?php echo $l->t('Import') ?>
+		</button>
 		<span class="msg"></span>
 		<br />
 		<script>
 			var gsync_url = 'https://accounts.google.com/o/oauth2/auth?client_id=<?php echo $cid ?>&response_type=token&scope=https://www.google.com/m8/feeds&redirect_uri=<?php echo $redirect ?>';
 			var gsync_perm_url = 'https://accounts.google.com/o/oauth2/auth?scope=https://www.google.com/m8/feeds/&state=/profile&response_type=code&client_id=<?php echo $cid ?>&access_type=offline&redirect_uri=<?php echo $redirect ?>';
 		</script>
-		<div <?php echo (!$isReady ? '' : 'style="display:none"');  ?>>
+		<div <?php echo ($isReady ? '' : 'style="display:none"');  ?>>
 			<hr />
 			<strong><?php echo $l->t('Autosync') ?></strong><br />
 			<label><strong><?php echo $l->t('App Secret') ?>:</strong></label>
