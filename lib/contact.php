@@ -86,7 +86,7 @@ class Contact {
 					//If exists and should not be updated - skip
 					if (self::needUpdate($oldContactId)) {
 						$vcard = self::toVcard($entry);
-						\OC_Contacts_VCard::edit($oldContactId, $vcard);
+						\OCA\Contacts\VCard::edit($oldContactId, $vcard);
 					}
 					continue;
 				}
@@ -94,9 +94,9 @@ class Contact {
 			
 			$vcard = self::toVcard($entry);
 			$bookid = self::getBookId($userid);
-			\OC_Contacts_VCard::add($bookid, $vcard);
+			\OCA\Contacts\VCard::add($bookid, $vcard);
 		}
-		\OC_Contacts_App::getCategories();
+		\OCA\Contacts\App::getCategories();
 	}
 
 	/**
@@ -106,8 +106,8 @@ class Contact {
 	 */
 	public static function getBookId($userid) {
 		if (!self::$_bookId) {
-			self::$_bookId = \OC_Contacts_Addressbook::add($userid, 'sync on ' . date('jS \of F Y h:i:s A'), null);
-			\OC_Contacts_Addressbook::setActive(self::$_bookId, 1);
+			self::$_bookId = \OCA\Contacts\Addressbook::add($userid, 'sync on ' . date('jS \of F Y h:i:s A'), null);
+			\OCA\Contacts\Addressbook::setActive(self::$_bookId, 1);
 		}
 		return self::$_bookId;
 	}
@@ -141,10 +141,10 @@ class Contact {
 	/**
 	 * Parse contact details into the Contact object
 	 * @param array $contact
-	 * @return OC_VObject 
+	 * @return Sabre\VObject\Component 
 	 */
 	public static function toVcard($contact) {
-		$vcard = new \OC_VObject('VCARD');
+		$vcard = new \Sabre\VObject\Component('VCARD');
 		$vcard->setUID();
 
 		$vcard = self::_addPropertyStrings($contact, $vcard);
@@ -158,7 +158,7 @@ class Contact {
 				$vcard->addProperty(self::CONTACT_PHONE, $phone['value']);
 				$line = count($vcard->children) - 1;
 				foreach ($phone['type'] as $type) {
-					$vcard->children[$line]->parameters[] = new \Sabre_VObject_Parameter('TYPE', $type);
+					$vcard->children[$line]->parameters[] = new \Sabre\VObject\Parameter('TYPE', $type);
 				}
 			}
 		}
@@ -182,7 +182,7 @@ class Contact {
 			foreach ($contact[self::CONTACT_ADDRESS] as $address) {
 				$vcard->addProperty(self::CONTACT_ADDRESS, $address);
 				$line = count($vcard->children) - 1;
-				$vcard->children[$line]->parameters[] = new \Sabre_VObject_Parameter('TYPE', $address['type']);
+				$vcard->children[$line]->parameters[] = new \Sabre\VObject\Parameter('TYPE', $address['type']);
 			}
 		}
 
@@ -190,7 +190,8 @@ class Contact {
 			foreach ($contact[self::CONTACT_EMAIL] as $email) {
 				$vcard->addProperty(self::CONTACT_EMAIL, $email['value']);
 				  $line = count($vcard->children) - 1;
-				  $vcard->children[$line]->parameters[] = new \Sabre_VObject_Parameter('TYPE', $email['type']);
+				  $vcard->children[$line]->parameters[] = new \Sabre\VObject\Parameter('TYPE', $email['type']);
+
 			}
 		}
 
@@ -210,8 +211,8 @@ class Contact {
 	/**
 	 * Fill the string properties in a one go
 	 * @param array $contact
-	 * @param OC_VObject $vcard
-	 * @return OC_VObject
+	 * @param Sabre\VObject\Component $vcard
+	 * @return Sabre\VObject\Component
 	 */
 	protected static function _addPropertyStrings($contact, $vcard) {
 
