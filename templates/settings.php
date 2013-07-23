@@ -30,10 +30,8 @@
 		</button>
 		<span class="msg"></span>
 		<br />
-		<script>
-			var gsync_url = 'https://accounts.google.com/o/oauth2/auth?client_id=<?php echo $cid ?>&response_type=token&scope=https://www.google.com/m8/feeds&redirect_uri=<?php echo $redirect ?>';
-			var gsync_perm_url = 'https://accounts.google.com/o/oauth2/auth?scope=https://www.google.com/m8/feeds/&state=/profile&response_type=code&client_id=<?php echo $cid ?>&access_type=offline&redirect_uri=<?php echo $redirect ?>';
-		</script>
+		<input type="hidden" id="GSYNC_URL_JS" value="https://accounts.google.com/o/oauth2/auth?client_id=<?php echo $cid ?>&response_type=token&scope=https://www.google.com/m8/feeds&redirect_uri=<?php echo $redirect ?>">
+		<input type="hidden" id="GSYNC_PERM_URL_JS" value="https://accounts.google.com/o/oauth2/auth?scope=https://www.google.com/m8/feeds/&state=/profile&response_type=code&client_id=<?php echo $cid ?>&access_type=offline&redirect_uri=<?php echo $redirect ?>">
 		<div <?php echo ($isReady ? '' : 'style="display:none"');  ?>>
 			<hr />
 			<strong><?php echo $l->t('Autosync') ?></strong><br />
