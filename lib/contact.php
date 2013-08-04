@@ -145,7 +145,7 @@ class Contact {
 	 */
 	public static function toVcard($contact) {
 		$vcard = new \Sabre\VObject\Component('VCARD');
-		$vcard->setUID();
+		//$vcard->setUID(); 
 
 		$vcard = self::_addPropertyStrings($contact, $vcard);
 
@@ -155,7 +155,7 @@ class Contact {
 					continue;
 				}
 
-				$vcard->addProperty(self::CONTACT_PHONE, $phone['value']);
+				$vcard->add(self::CONTACT_PHONE, $phone['value']);
 				$line = count($vcard->children) - 1;
 				foreach ($phone['type'] as $type) {
 					$vcard->children[$line]->parameters[] = new \Sabre\VObject\Parameter('TYPE', $type);
@@ -174,13 +174,19 @@ class Contact {
 				}
 			}
 			if (count($categories)) {
-				$vcard->setString(self::CONTACT_CATEGORIES, implode(',', $categories));
+				$vcard->add(self::CONTACT_CATEGORIES, implode(',', $categories));
 			}
 		}
 
 		if (isset($contact[self::CONTACT_ADDRESS])) {
 			foreach ($contact[self::CONTACT_ADDRESS] as $address) {
-				$vcard->addProperty(self::CONTACT_ADDRESS, $address);
+                //$vcard->add(self::CONTACT_ADDRESS, $address); 
+                $address_node = new \Sabre\VObject\Property\Compound('ADR');
+				$address_processed = $address;
+				unset($address_processed['type']);
+				$address_node->setParts($address_processed);
+				$vcard->add($address_node);
+	
 				$line = count($vcard->children) - 1;
 				$vcard->children[$line]->parameters[] = new \Sabre\VObject\Parameter('TYPE', $address['type']);
 			}
@@ -188,7 +194,7 @@ class Contact {
 
 		if (isset($contact[self::CONTACT_EMAIL])) {
 			foreach ($contact[self::CONTACT_EMAIL] as $email) {
-				$vcard->addProperty(self::CONTACT_EMAIL, $email['value']);
+				$vcard->add(self::CONTACT_EMAIL, $email['value']);
 				  $line = count($vcard->children) - 1;
 				  $vcard->children[$line]->parameters[] = new \Sabre\VObject\Parameter('TYPE', $email['type']);
 
@@ -199,7 +205,7 @@ class Contact {
 			$data = Request::getContactImage($contact[self::CONTACT_PHOTO]);
 			$img = new \OC_Image();
 			if ($img->loadFromData($data)) {
-				$vcard->addProperty(self::CONTACT_PHOTO, $img->__toString(), array('ENCODING' => 'b', 'TYPE' => $img->mimeType()));
+				$vcard->add(self::CONTACT_PHOTO, $img->__toString(), array('ENCODING' => 'b', 'TYPE' => $img->mimeType()));
 			} else {
 				App::log('Unable to parse the image provided by Google. ', \OCP\Util::WARN);
 			}
@@ -218,7 +224,7 @@ class Contact {
 
 		foreach (self::$_propertyStrings as $property) {
 			if (isset($contact[$property])) {
-				$vcard->setString($property, $contact[$property]);
+				$vcard->add($property, $contact[$property]);
 			}
 		}
 		return $vcard;
