@@ -9,6 +9,10 @@
  */
 
 $(document).ready(function(){
+
+	var GSYNC_URL = $('#GSYNC_URL_JS').val();
+	var GSYNC_PERM_URL = $('#GSYNC_PERM_URL_JS').val();
+
 	$('#gsync_client_id').blur(function(event){
 		event.preventDefault();
 		OC.msg.startSaving('#gsyncform .msg');
@@ -25,8 +29,8 @@ $(document).ready(function(){
 	});
 	$('#gsync_import').click(function(event){
 		event.preventDefault();
-		gsync_url = gsync_url.replace(/client_id=[^&]*/, 'client_id=' + $( "#gsync_client_id" ).val());
-		window.location = gsync_url;
+		GSYNC_URL = GSYNC_URL.replace(/client_id=[^&]*/, 'client_id=' + $( "#gsync_client_id" ).val());
+		window.location = GSYNC_URL;
 	});
 	
 	$('#gsync_secret').blur(function(event){
@@ -45,8 +49,8 @@ $(document).ready(function(){
 
 	$('#gsync_autosync').click(function(event){
 		event.preventDefault();
-		gsync_perm_url = gsync_perm_url.replace(/client_id=[^&]*/, 'client_id=' + $( "#gsync_client_id" ).val());
-		window.location = gsync_perm_url;
+		GSYNC_PERM_URL = GSYNC_PERM_URL.replace(/client_id=[^&]*/, 'client_id=' + $( "#gsync_client_id" ).val());
+		window.location = GSYNC_PERM_URL;
 	});
 	$('#gsync_revoke').click(function(event){
 		event.preventDefault();
